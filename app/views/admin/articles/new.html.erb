@@ -1,5 +1,9 @@
-<h1>New Article</h1>
+<h1><%= new_or_edit %> Article</h1>
+<div class="row">
 <%= error_messages_for @article %>
+</div>
+
 <%= form_for(@article, :action => url(:admin_articles), :class => "article_form") do %>
-  <%= partial "form", :with => @article %>
+<%= partial "form", :with => @article %>
+
 <% end =%>

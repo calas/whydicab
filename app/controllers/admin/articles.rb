@@ -27,7 +27,7 @@ module Admin
       only_provides :html
       @article = Article.get(id)
       raise NotFound unless @article
-      display @article
+      display @article, :new
     end
 
     def create(article)
@@ -47,7 +47,7 @@ module Admin
       if @article.update_attributes(article)
         redirect url(:admin_article, @article), :message => {:notice => "Article was successfully edited"}
       else
-        display @article, :edit
+        display @article, :new
       end
     end
 
