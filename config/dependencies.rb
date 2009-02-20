@@ -30,3 +30,4 @@ dependency "dm-tags", dm_gems_version
 
 dependency "RedCloth", ">= 4.1.0", :require_as => "redcloth"
 dependency "will_paginate", "~>3.0.0"
+dependency 'do_sqlite3', '~> 0.9.11'

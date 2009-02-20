@@ -6,4 +6,18 @@
 <%= form_for(@article, :action => url(:admin_articles), :class => "article_form") do %>
 <%= partial "form", :with => @article %>
 
+<div class="row">
+  <h1>Translation</h1>
+  make sure is writen in the other locale (en <=> es)
+</div>
+
+<div class="row">
+<%= error_messages_for @article.translation %>
+</div>
+
+<%= partial "translation", :with => @article.translation, :as => :translation %>
+
+<div class="row">
+  <%= submit "Submit", :class => "submit" %>
+</div>
 <% end =%>

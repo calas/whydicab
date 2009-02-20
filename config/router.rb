@@ -10,7 +10,7 @@
 #
 #   match("/books/:book_id/:action").
 #     to(:controller => "books")
-#   
+#
 # Or, use placeholders in the "to" results for more complicated routing, e.g.:
 #
 #   match("/admin/:module/:controller/:action/:id").
@@ -28,8 +28,15 @@
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
   resources :search
-  
+
   resources :articles, :identify => :permalink
+
+  match('/:language', :language => /^[a-z]{2}$/).to(:controller => "articles") do
+    #TODO quitar el es o en del show es problematico
+      match("/articles/:permalink").to(:action => "show").name(:article)
+      match("/").name(:articles)
+      match("/articles").name(:articles)
+  end
 
   resources :tags, :identify => :name
 
@@ -38,7 +45,7 @@ Merb::Router.prepare do
   namespace "admin" do
     resources :articles
   end
-  # Year/month/day routes
+  # Year/month/day routes, could these get DRYed? we may loose names
   match("/:year",
         :year => /\d{4}/).to(:controller => :articles, :action => "index").name(:year)
   match("/:year/:month",
@@ -48,10 +55,10 @@ Merb::Router.prepare do
         :year => /\d{4}/,
         :month => /\d{1,2}/,
         :day => /\d{1,2}/).to(:controller => :articles, :action => "index").name(:day)
-                    
+
   # RESTful routes
   # resources :posts
-  
+
   # Adds the required routes for merb-auth using the password slice
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
 

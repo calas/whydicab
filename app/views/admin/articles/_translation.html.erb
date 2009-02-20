@@ -1,0 +1,23 @@
+<input type="hidden" value="<%= translation.id if translation %>" class="hidden" name="translation[id]" id="translation_id"/>
+
+<div class="row">
+   <label for="translation_published">Translate?</label>
+   <input type="hidden" value="0" class="hidden" name="have_translation" id="havetranslation"/>
+   <input type="checkbox" class="forminput checkbox" value="1" checked='checked' name="have_translation" id="have_translation"/>
+</div>
+
+<div class="row">
+ <label for="translation_title">Title: *</label>
+ <input type="text" value="<%= translation.title if translation %>" class="forminput text" name="translation[title]" id="translation_title"/>
+</div>
+<div class="row">
+<label for="translation_body">Body:</label>
+<textarea class="forminput" name="translation[body]" id="translation_body">
+  <%= translation.body if translation %>
+</textarea>
+</div>
+<div class="row">
+   <input type="hidden" value="0" class="hidden" name="translation[published]" id="translation[published]"/>
+   <input type="checkbox" class="forminput checkbox" value="1" checked='checked' name="translation[published]" id="translation_published"/>
+   <label for="translation_published">Published?:</label>
+</div>

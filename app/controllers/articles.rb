@@ -15,10 +15,13 @@ class Articles < Application
     display @articles
   end
 
+  #TODO article locale determines site locale
   def show(permalink)
     @article = Article.first(:permalink => Merb::Parse.unescape(permalink))
     raise NotFound unless @article
     display @article
   end
+
+  #TODO determine locale in before
 
 end # Articles

@@ -19,7 +19,7 @@ module Admin
 
     def new
       only_provides :html
-      @article = Article.new
+      @article = Article.new :locale => 'en'
       display @article
     end
 
@@ -30,10 +30,9 @@ module Admin
       display @article, :new
     end
 
-    def create(article)
-      @article = Article.new(article)
-      @article.author = session.user
-      if @article.save
+    def create
+      @article = Article.new_with_translation(params)
+      if @article.save_with_translation(session.user)
         redirect url(:admin_article, @article), :message => {:notice => "Article was successfully created"}
       else
         message[:error] = "Article failed to be created"
@@ -41,10 +40,10 @@ module Admin
       end
     end
 
-    def update(id, article)
-      @article = Article.get(id)
+    def update
+      @article = Article.get(params[:id])
       raise NotFound unless @article
-      if @article.update_attributes(article)
+      if @article.update_with_translation(params)
         redirect url(:admin_article, @article), :message => {:notice => "Article was successfully edited"}
       else
         display @article, :new
