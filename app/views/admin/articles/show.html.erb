@@ -7,7 +7,7 @@
 </span>
 
 <p class="center small">
-  <em>posted by <%= @article.user.login %> @ <%= link_to @article.published_at.to_time, url(:article, @article) if @article.published? %></em>
+  <em>posted by <%= @article.author.login %> @ <%= link_to @article.published_at.to_time, url(:article, @article) if @article.published? %></em>
   <% unless @article.tags.empty? -%>
   <br />
   <em>Tags:

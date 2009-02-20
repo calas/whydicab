@@ -32,7 +32,7 @@ module Admin
 
     def create(article)
       @article = Article.new(article)
-      @article.user = session.user
+      @article.author = session.user
       if @article.save
         redirect url(:admin_article, @article), :message => {:notice => "Article was successfully created"}
       else

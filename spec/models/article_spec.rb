@@ -5,7 +5,7 @@ describe Article do
   before(:each) do
     @article = Article.gen
   end
-  
+
   it 'should be valid' do
     @article.should be_valid
   end
@@ -15,8 +15,8 @@ describe Article do
     repeated.should_not be_valid
   end
 
-  it 'should have an associated user' do
-    @article.user = nil
+  it 'should have an associated author' do
+    @article.author = nil
     @article.should_not be_valid
   end
 
@@ -24,7 +24,7 @@ describe Article do
     before(:each) do
       @article.published = true
     end
-    
+
     it 'should have a body' do
       @article.body = nil
       @article.should_not be_valid

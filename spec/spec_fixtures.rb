@@ -8,7 +8,8 @@ User.fixture {{
 
 Article.fixture {{
     :title => (unique(:title) { /[:sentence:]/.gen[0..255] }),
+
     :published => true,
     :body => (/[:sentence:]/.gen),
-    :user => User.make
+    :author => User.make
   }}
