@@ -16,13 +16,76 @@ Create your database.
 
 That's it.
 
+=== FIX for install
+
+as now there are issues with bundling, so you may need if install failed
+
+$ cp bundle/* gems/cache/
+$ thor merb:gem:redeploy
+$ thor merb:gem:install
+
+== Getting Up and running
+
+migrate your database
+$ echo 'DataMapper.auto_migrate!' | bin/merb -i
+
+if you see lots of sql and this at the end:
+
+[Article, User, Merb::DataMapperSessionStore, Tag, Tagging]
+
+everything went ok
+
 == Admin user
 
 To create an user, right now you have to use the console.
 
-merb -i 
+$ echo 'User.create :login => "admin", :password => "password", :password_confirmation => "password"' | bin/merb -i
 
-User.create(:login => 'admin', :password => 'password', :password_confirmation => 'password')
+now head to /admin and log in
+
+== preparing to run specs
+
+$ cp sample_development.db sample_test.db
+$ spec spec/...
+
+=== Thor task for getting up and running
+
+there's an attempt to accomplish the Up and Running and Spec Preparation with thor under
+
+tasks/whydi_up.thor
+
+that tries to do the same as the steps above but it's not ready yet
+
+== Deploying with passenger
+
+to deploy with passenger add this to /etc/hosts:
+
+127.0.0.1 localhost whydicab.local
+
+and this (adjust if needed) to httpd.conf
+
+# merb deploy
+# Only needed if getting 403 Forbidden errors on static assets:
+<Directory "/home/joahking/devel/merb/whydicab">
+  Order allow,deny
+  Allow from all
+</Directory>
+
+<VirtualHost *:80>
+  ServerName www.whydi.devel
+  DocumentRoot /home/joahking/devel/merb/whydicab/public
+  RackEnv development
+  ErrorLog /home/joahking/devel/merb/whydicab/log/error.log
+</VirtualHost>
+
+now no more fastcgi:
+$ rm public/merb.fcgi
+$ rm public/.htaccess (for development, might be dangerous in production)
+$ touch tmp/restart.txt OR apachectl graceful
+
+and have a look at config.ru.sample in your root.
+
+Read more http://wiki.merbivore.com/deployment/passenger?s[]=phusion
 
 == License
 
